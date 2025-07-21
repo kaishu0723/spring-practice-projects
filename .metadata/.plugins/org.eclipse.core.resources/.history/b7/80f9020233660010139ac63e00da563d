@@ -1,0 +1,6 @@
+package com.example.demo.controller;
+
+@Contoroller
+public class TaskContoroller {
+
+}
