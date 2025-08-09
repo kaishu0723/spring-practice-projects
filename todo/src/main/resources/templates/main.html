@@ -5,15 +5,16 @@
 <title>main page</title>
 </head>
 <body>
-	<form th:action="@{/add-task}" method="post">
-		<input type="text">
+	<form th:action="@{/add-task}" th:object="${taskItem}" method="post">
+		<input type="text" th:field="*{title}">
 		<button>Add</button>
 	</form>
-	<div>
-<!--		<div>-->
-<!--			<p th:text="${title}"></p>-->
-<!--			<input type="checkbox">-->
-<!--		</div>-->
+	<div th:if="${tasks}" th:each="task:${tasks}">
+		<form th:action="@{/toggle}" method="post">
+			<p th:text="${task.title}"></p>
+			<input type="hidden" name="id" th:value="${task.id}">
+			<input type="checkbox" th:checked="*{task.isComplete}" onchange="this.form.submit()">
+		</form>
 	</div>
 </body>
 </html>
