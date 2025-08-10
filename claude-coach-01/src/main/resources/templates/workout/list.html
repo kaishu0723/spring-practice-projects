@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>トレーニング記録一覧</title>
+</head>
+<body>
+<h1>トレーニング一覧</h1>
+<a th:href="@{/workouts/add}">新しい記録を追加</a>
+<table border="1">
+	<thead>
+		<tr>
+			<th>日付</th>
+			<th>種目</th>
+			<th>セット数</th>
+			<th>回数</th>
+			<th>重量(kg)</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="workout:${workouts}">
+			<td th:text="${workout.date}"></td>
+			<td th:text="${workout.exerciseName}"></td>
+			<td th:text="${workout.sets}"></td>
+			<td th:text="${workout.reps}"></td>
+			<td th:text="${workout.weight}"></td>
+			<td>
+				<a th:href="@{/workouts/edit/{id}(id=${workout.id})}">編集</a>
+				<form th:action="@{/workouts/delete/{id}(id=${workout.id})}" method="post" style="display: inline;">
+					<button type="submit">削除</button>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<br/>
+<a th:href="@{/home}">ホームに戻る</a>
+<form th:action="@{/logout}" method="post">
+	<button type="submit">ログアウト</button>
+</form>
+</body>
+</html>

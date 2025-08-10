@@ -14,5 +14,11 @@
     <form th:action="@{/logout}" method="post">
         <button type="submit">ログアウト</button>
     </form>
+	<a th:href="@{/workouts}">
+	        <button type="submit">トレーニング記録</button>
+	</a>
+	<a th:href="@{/profiles}">
+		        <button type="submit">身体測定記録</button>
+		</a>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>身体測定記録</title>
+</head>
+<body>
+    <h1>身体測定記録</h1>
+    
+    <form th:action="@{/profiles}" th:object="${newProfile}" method="post">
+        <h3>新しい記録を追加</h3>
+        <div>
+            <label for="date">日付:</label>
+            <input type="date" id="date" th:field="*{date}" required>
+        </div>
+        <div>
+            <label for="weight">体重(kg):</label>
+            <input type="number" step="0.1" id="weight" th:field="*{weight}" required>
+        </div>
+        <div>
+            <label for="bodyFat">体脂肪率(%):</label>
+            <input type="number" step="0.1" id="bodyFat" th:field="*{bodyFat}">
+        </div>
+        <button type="submit">記録</button>
+    </form>
+    
+    <hr/>
+    
+    <h3>過去の記録</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>日付</th>
+                <th>体重(kg)</th>
+                <th>体脂肪率(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="profile : ${profiles}">
+                <td th:text="${profile.date}"></td>
+                <td th:text="${profile.weight}"></td>
+                <td th:text="${profile.bodyFat}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <br/>
+    <a th:href="@{/home}">ホームに戻る</a>
+</body>
+</html>
