@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>身体測定記録</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
     <h1>身体測定記録</h1>
@@ -26,6 +33,12 @@
     
     <hr/>
     
+    <div class="chart-container">
+        <canvas id="profileChart"></canvas>
+    </div>
+    
+    <hr/>
+    
     <h3>過去の記録</h3>
     <table border="1">
         <thead>
@@ -46,5 +59,70 @@
     
     <br/>
     <a th:href="@{/home}">ホームに戻る</a>
+    
+    <script th:if="${!profiles.isEmpty()}">
+        const profiles = JSON.parse('[[${profiles}]]');
+        
+        const dates = profiles.map(p => p.date);
+        const weights = profiles.map(p => p.weight);
+        const bodyFats = profiles.map(p => p.bodyFat);
+        
+        const ctx = document.getElementById('profileChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: '体重 (kg)',
+                        data: weights,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: '体脂肪率 (%)',
+                        data: bodyFats,
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.1,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: '体重 (kg)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: '体脂肪率 (%)'
+                        },
+                        grid: {
+                            drawOnChartArea: false, // only want the grid lines for one axis to show up
+                        },
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

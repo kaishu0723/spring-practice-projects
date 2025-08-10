@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>エラー</title>
+</head>
+<body>
+    <h1>エラーが発生しました</h1>
+    <p>ご迷惑をおかけしております。しばらく経ってから再度お試しください。</p>
+    <p>エラーコード: <span th:text="${status}"></span></p>
+    <p th:if="${message}">メッセージ: <span th:text="${message}"></span></p>
+    <br/>
+    <a th:href="@{/home}">ホームに戻る</a>
+</body>
+</html>
